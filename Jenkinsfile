@@ -8,12 +8,18 @@
             }
         }
 
-        stage('Test Flask Application') {
+        stage('Check Tools') {
             steps {
-                sh 'python --version'
-                sh 'python -m pip install -r requirements.txt'
-                sh 'python -m pip install pytest'
-                sh 'python -m pytest tests/ -v'
+                sh 'python3 --version'
+                sh 'docker --version'
+            }
+        }
+
+        stage('Install Dependencies and Test') {
+            steps {
+                sh 'python3 -m venv .venv'
+                sh '.venv/bin/pip install -r requirements.txt pytest'
+                sh '.venv/bin/python -m pytest tests/ -v'
             }
         }
 
